@@ -18,5 +18,8 @@ r_addr2 [1:0] --->| input --->  reg_file[3] [7:0]          |-----> r_data2 [7:0]
 
 # Output
 ## Waveform
+<img width="934" height="197" alt="image" src="https://github.com/user-attachments/assets/f958990e-b2bf-4bbb-b935-0f2c4b9756bd" />
 
 ## Simulation Terminal 
+<img width="638" height="272" alt="image" src="https://github.com/user-attachments/assets/7fb4fc7e-93f6-4ffa-975b-e575906ab503" />
+
