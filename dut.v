@@ -1,13 +1,13 @@
 module register_file (
     input  wire       clk,
     input  wire       rst,
-    input  wire       we,       // Write Enable
-    input  wire [1:0] r_addr1,  // Read Port 1 Address
-    input  wire [1:0] r_addr2,  // Read Port 2 Address
-    input  wire [1:0] w_addr,   // Write Port Address
-    input  wire [7:0] w_data,   // Write Data
-    output wire [7:0] r_data1,  // Read Port 1 Data
-    output wire [7:0] r_data2   // Read Port 2 Data
+    input  wire       we,        // Write Enable
+    input  wire [1:0] r_addr1,   // Read Port 1 Address
+    input  wire [1:0] r_addr2,   // Read Port 2 Address
+    input  wire [1:0] w_addr,    // Write Port Address
+    input  wire [7:0] w_data,    // Write Data
+    output wire [7:0] r_data1,   // Read Port 1 Data
+    output wire [7:0] r_data2    // Read Port 2 Data
 );
 
     // 4 registers, each 8 bits wide
