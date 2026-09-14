@@ -16,4 +16,7 @@ r_addr2 [1:0] --->| input --->  reg_file[3] [7:0]          |-----> r_data2 [7:0]
                   +----------------------------------------------+
 ```
 
-# Waveform
+# Output
+## Waveform
+
+## Simulation Terminal 
