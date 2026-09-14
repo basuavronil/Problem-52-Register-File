@@ -25,17 +25,23 @@ module register_file_tb;
         .r_data2(r_data2)
     );
 
-    // Waveform configuration required for EDA Playground
+    // Waveform dump configuration
     initial begin
         $dumpfile("dump.vcd");
         $dumpvars(0, register_file_tb);
     end
 
-    // Clock generation: 100MHz (Period = 10ns)
+    // Automatic signal monitor (prints to console on any signal change)
+    initial begin
+        $monitor("Time=%0t ns | rst=%b | we=%b | w_addr=%0d w_data=%h | r_addr1=%0d r_data1=%h | r_addr2=%0d r_data2=%h",
+                 $time, rst, we, w_addr, w_data, r_addr1, r_data1, r_addr2, r_data2);
+    end
+
+    // 100MHz clock generation (Period = 10ns)
     always #5 clk = ~clk;
 
     initial begin
-        // Initialize signals
+        // 1. Signal Initialization & Reset Assertion
         clk     = 0;
         rst     = 1;
         we      = 0;
@@ -44,9 +50,11 @@ module register_file_tb;
         r_addr1 = 0;
         r_addr2 = 0;
 
-        #15 rst = 0; // Deassert reset
+        @(posedge clk);
+        #1;
+        rst = 0; // Release Reset
 
-        // Write Operations
+        // 2. Write Operations
         @(posedge clk);
         we = 1; w_addr = 2'b00; w_data = 8'hA1; // Write 0xA1 to Reg 0
 
@@ -56,21 +64,21 @@ module register_file_tb;
         @(posedge clk);
         we = 1; w_addr = 2'b10; w_data = 8'hC3; // Write 0xC3 to Reg 2
 
-        // Stop writing
+        // Stop Writes
         @(posedge clk);
         we = 0;
 
-        // Concurrent Read Operations
-        r_addr1 = 2'b00; // Read Reg 0 (Expected: A1)
-        r_addr2 = 2'b01; // Read Reg 1 (Expected: B2)
-        #5;
+        // 3. Read Operations
+        #2;
+        r_addr1 = 2'b00; // Read Reg 0 (0xA1)
+        r_addr2 = 2'b01; // Read Reg 1 (0xB2)
+        #10;
 
-        r_addr1 = 2'b01; // Read Reg 1 (Expected: B2)
-        r_addr2 = 2'b10; // Read Reg 2 (Expected: C3)
-        #5;
+        r_addr1 = 2'b01; // Read Reg 1 (0xB2)
+        r_addr2 = 2'b10; // Read Reg 2 (0xC3)
+        #10;
 
-        // Wait to capture complete waveforms before exiting
-        #20;
+        #10;
         $finish;
     end
 
